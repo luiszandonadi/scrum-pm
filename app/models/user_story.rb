@@ -17,7 +17,7 @@ class UserStory < ActiveRecord::Base
       current_issues = issues.find(:all, :conditions => ["created_on < ?", date])
       return false if issues.size != current_issues.size
       issues.each{|issue|
-        done_ratio_details = issue.journals.map(&:details).flatten.select {|detail| 'done_ratio' == detail.prop_key }
+        done_ratio_details = issue.journals.map(&:details).flatten.select {|detail| 'done_ratio' == detail.to_s }
         details_today_or_earlier = done_ratio_details.select {|a| a.journal.created_on.to_date <= date }
         last_done_ratio_change = details_today_or_earlier.sort_by {|a| a.journal.created_on }.last
 
